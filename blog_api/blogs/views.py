@@ -26,3 +26,21 @@ def blog_create(request):
         serializer.save()
 
     return Response(serializer.data)
+
+@api_view(["POST"])
+def blog_update(request, id):
+    blog = Blog.objects.get(pk=id)
+    serializer = BlogSerializer(instance=blog, data=request.data)
+
+    if serializer.is_valid():
+        serializer.save()
+
+    return Response(serializer.data)
+
+@api_view(["DELETE"])
+def blog_delete(request, id):
+    blog = Blog.objects.get(pk=id)
+
+    blog.delete()
+
+    return Response("Item deleted successfully")
